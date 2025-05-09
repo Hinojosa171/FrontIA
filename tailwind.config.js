@@ -34,6 +34,15 @@ export default {
           950: '#1e1b4b',
         }
       },
+      fontFamily: {
+        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+      },
+      scale: {
+        '102': '1.02',
+      },
+      transitionTimingFunction: {
+        'bounce-sm': 'cubic-bezier(0.4, 0, 0.2, 1)',
+      },
       boxShadow: {
         'sm': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
         DEFAULT: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
@@ -46,12 +55,28 @@ export default {
       animation: {
         'bounce': 'bounce 1s infinite',
         'ping': 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite',
+        'bounce-sm': 'bounce-sm 1s infinite',
+        'float': 'float 3s ease-in-out infinite',
+      },
+      keyframes: {
+        'bounce-sm': {
+          '0%, 100%': { transform: 'translateY(-1%)' },
+          '50%': { transform: 'translateY(0)' },
+        },
+        'float': {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-5px)' },
+        },
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'gradient-conic': 'conic-gradient(var(--tw-gradient-stops))',
       }
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/typography'),
+  ],
   darkMode: 'media',
 }

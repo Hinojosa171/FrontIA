@@ -58,36 +58,36 @@ const QuizApp = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-100 via-white to-indigo-100 p-4 md:p-8">
-      <div className="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl p-6 md:p-8">
+      <div className="max-w-3xl mx-auto bg-white rounded-3xl shadow-2xl p-6 md:p-8 transform transition-all duration-300 hover:shadow-[0_20px_50px_rgba(147,51,234,0.2)]">
         {isLoading && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white p-6 rounded-lg shadow-xl flex items-center space-x-4">
-              <FaSpinner className="animate-spin text-purple-600 text-2xl" />
-              <p className="text-gray-700">Generando preguntas...</p>
+          <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50">
+            <div className="bg-white p-8 rounded-2xl shadow-xl flex items-center space-x-4 transform transition-all duration-300 hover:scale-105">
+              <FaSpinner className="animate-spin text-purple-600 text-3xl" />
+              <p className="text-gray-700 text-lg font-medium">Generando preguntas...</p>
             </div>
           </div>
         )}
 
         {showResult ? (
-          <div className="text-center space-y-6">
-            <h2 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
+          <div className="text-center space-y-8">
+            <h2 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
               ¡Cuestionario completado!
             </h2>
-            <div className="p-6 bg-gradient-to-br from-purple-50 to-indigo-50 rounded-xl">
-              <p className="text-xl text-gray-800 mb-2">
+            <div className="p-8 bg-gradient-to-br from-purple-50 to-indigo-50 rounded-2xl">
+              <p className="text-2xl text-gray-800 mb-4">
                 {name}, has acertado {questions.filter((q, idx) => userAnswers[idx] === q.correctAnswer).length} de {questions.length} preguntas.
               </p>
               <button 
                 onClick={() => window.location.reload()}
-                className="mt-4 px-6 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-200"
+                className="mt-6 px-8 py-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-lg rounded-xl shadow-lg hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300"
               >
                 Volver a empezar
               </button>
             </div>
           </div>
         ) : step === 0 ? (
-          <form onSubmit={handleStart} className="space-y-6">
-            <h1 className="text-3xl font-bold text-center bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent mb-8">
+          <form onSubmit={handleStart} className="space-y-8">
+            <h1 className="text-4xl font-bold text-center bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent mb-12">
               Cuestionario Interactivo
             </h1>
             <div className="space-y-4">
