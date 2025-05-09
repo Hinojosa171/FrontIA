@@ -7,15 +7,8 @@
       "config": {
         "buildCommand": "npm run build",
         "outputDirectory": "dist",
-        "installCommand": "npm install",
-        "framework": "vite"
+        "installCommand": "npm install"
       }
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
     }
   ],
   "rewrites": [
