@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import axios from 'axios'
 import { FaPaperPlane, FaRobot, FaUser } from 'react-icons/fa'
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'https://back-ia.vercel.app';
 
 const ChatPrompt = () => {
   const [prompt, setPrompt] = useState('')
