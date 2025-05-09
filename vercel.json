@@ -5,8 +5,10 @@
       "src": "package.json",
       "use": "@vercel/static-build",
       "config": {
-        "buildCommand": "vite build",
-        "outputDirectory": "dist"
+        "buildCommand": "npm run build",
+        "outputDirectory": "dist",
+        "installCommand": "npm install",
+        "framework": "vite"
       }
     }
   ],
@@ -14,6 +16,12 @@
     {
       "src": "/(.*)",
       "dest": "/index.html"
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }

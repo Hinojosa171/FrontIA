@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "CI=false vite build",
+    "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -28,6 +28,6 @@
     "vite": "^5.0.8"
   },
   "engines": {
-    "node": "18.x"
+    "node": ">=16.0.0"
   }
 }
