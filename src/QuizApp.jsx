@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { FaArrowRight, FaCheck, FaTimes, FaSpinner } from 'react-icons/fa';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'https://back-ia.vercel.app';
 
@@ -55,71 +56,128 @@ const QuizApp = () => {
     }
   };
 
-  if (isLoading) return <p>Cargando...</p>;
-
-  if (showResult) {
-    const correct = questions.filter((q, idx) => userAnswers[idx] === q.correctAnswer).length;
-    return (
-      <div>
-        <h2>¡Cuestionario terminado!</h2>
-        <p>{name}, acertaste {correct} de {questions.length} preguntas.</p>
-        <button onClick={() => window.location.reload()}>Volver a empezar</button>
-      </div>
-    );
-  }
-
-  if (step === 0) {
-    return (
-      <form onSubmit={handleStart}>
-        <h1>Cuestionario Interactivo</h1>
-        <div>
-          <label>Nombre:</label>
-          <input value={name} onChange={e => setName(e.target.value)} required />
-        </div>
-        <div>
-          <label>Tema:</label>
-          <select value={topic} onChange={e => setTopic(e.target.value)} required>
-            <option value="">--Seleccionar--</option>
-            <option value="Historia">Historia</option>
-            <option value="Cultura">Cultura</option>
-            <option value="Deporte">Deporte</option>
-            <option value="Ciencia">Ciencia</option>
-            <option value="Geografía">Geografía</option>
-          </select>
-        </div>
-        <button type="submit">Comenzar</button>
-      </form>
-    );
-  }
-
   return (
-    <div>
-      <h2>Responde las preguntas</h2>
-      <form onSubmit={e => { e.preventDefault(); handleSubmitQuiz(); }}>
-        {questions.map((q, idx) => (
-          <div key={idx} style={{ marginBottom: 20 }}>
-            <strong>{idx + 1}. {q.question}</strong>
-            <div>
-              {[q.correctAnswer, ...q.incorrectAnswers]
-                .sort(() => Math.random() - 0.5)
-                .map((ans, i) => (
-                  <label key={i} style={{ display: 'block' }}>
-                    <input
-                      type="radio"
-                      name={`q${idx}`}
-                      value={ans}
-                      checked={userAnswers[idx] === ans}
-                      onChange={() => handleAnswer(idx, ans)}
-                      required
-                    />
-                    {ans}
-                  </label>
-                ))}
+    <div className="min-h-screen bg-gradient-to-br from-purple-100 via-white to-indigo-100 p-4 md:p-8">
+      <div className="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl p-6 md:p-8">
+        {isLoading && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white p-6 rounded-lg shadow-xl flex items-center space-x-4">
+              <FaSpinner className="animate-spin text-purple-600 text-2xl" />
+              <p className="text-gray-700">Generando preguntas...</p>
             </div>
           </div>
-        ))}
-        <button type="submit">Enviar respuestas</button>
-      </form>
+        )}
+
+        {showResult ? (
+          <div className="text-center space-y-6">
+            <h2 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
+              ¡Cuestionario completado!
+            </h2>
+            <div className="p-6 bg-gradient-to-br from-purple-50 to-indigo-50 rounded-xl">
+              <p className="text-xl text-gray-800 mb-2">
+                {name}, has acertado {questions.filter((q, idx) => userAnswers[idx] === q.correctAnswer).length} de {questions.length} preguntas.
+              </p>
+              <button 
+                onClick={() => window.location.reload()}
+                className="mt-4 px-6 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-200"
+              >
+                Volver a empezar
+              </button>
+            </div>
+          </div>
+        ) : step === 0 ? (
+          <form onSubmit={handleStart} className="space-y-6">
+            <h1 className="text-3xl font-bold text-center bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent mb-8">
+              Cuestionario Interactivo
+            </h1>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-gray-700 mb-2 font-medium">Nombre:</label>
+                <input 
+                  value={name} 
+                  onChange={e => setName(e.target.value)} 
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                  placeholder="Ingresa tu nombre"
+                  required 
+                />
+              </div>
+              <div>
+                <label className="block text-gray-700 mb-2 font-medium">Tema:</label>
+                <select 
+                  value={topic} 
+                  onChange={e => setTopic(e.target.value)}
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                  required
+                >
+                  <option value="">--Seleccionar--</option>
+                  <option value="Historia">Historia</option>
+                  <option value="Cultura">Cultura</option>
+                  <option value="Deporte">Deporte</option>
+                  <option value="Ciencia">Ciencia</option>
+                  <option value="Geografía">Geografía</option>
+                </select>
+              </div>
+            </div>
+            <button 
+              type="submit"
+              className="w-full px-6 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-200 flex items-center justify-center space-x-2"
+            >
+              <span>Comenzar</span>
+              <FaArrowRight />
+            </button>
+          </form>
+        ) : (
+          <form onSubmit={e => { e.preventDefault(); handleSubmitQuiz(); }} className="space-y-8">
+            <h2 className="text-2xl font-bold text-gray-800 mb-6">
+              Responde las preguntas, {name}
+            </h2>
+            {questions.map((q, idx) => (
+              <div key={idx} className="bg-gradient-to-br from-purple-50 to-indigo-50 p-6 rounded-xl space-y-4">
+                <strong className="text-lg text-gray-800 block mb-4">
+                  {idx + 1}. {q.question}
+                </strong>
+                <div className="grid gap-3">
+                  {[q.correctAnswer, ...q.incorrectAnswers]
+                    .sort(() => Math.random() - 0.5)
+                    .map((ans, i) => (
+                      <label 
+                        key={i} 
+                        className={`flex items-center p-4 rounded-lg border-2 cursor-pointer transition-all duration-200
+                          ${userAnswers[idx] === ans 
+                            ? 'border-purple-500 bg-purple-50' 
+                            : 'border-gray-200 hover:border-purple-300'}`}
+                      >
+                        <input
+                          type="radio"
+                          name={`q${idx}`}
+                          value={ans}
+                          checked={userAnswers[idx] === ans}
+                          onChange={() => handleAnswer(idx, ans)}
+                          className="hidden"
+                          required
+                        />
+                        <div className={`w-5 h-5 rounded-full border-2 mr-3 flex items-center justify-center
+                          ${userAnswers[idx] === ans 
+                            ? 'border-purple-500 bg-purple-500' 
+                            : 'border-gray-300'}`}
+                        >
+                          {userAnswers[idx] === ans && <FaCheck className="text-white text-sm" />}
+                        </div>
+                        <span className="text-gray-700">{ans}</span>
+                      </label>
+                    ))}
+                </div>
+              </div>
+            ))}
+            <button 
+              type="submit"
+              className="w-full px-6 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-200"
+            >
+              Enviar respuestas
+            </button>
+          </form>
+        )}
+      </div>
     </div>
   );
 };
